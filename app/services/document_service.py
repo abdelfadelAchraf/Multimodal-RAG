@@ -7,6 +7,7 @@ from pathlib import Path
 
 from app.core.config import settings
 from app.pipelines.ingestion import extract_pdf_content
+from app.pipelines.chunking import create_text_chunks
 
 
 class DocumentService:
@@ -62,6 +63,16 @@ class DocumentService:
                 document_id=document_id,
                 original_filename=original_filename
             )
+            chunks = create_text_chunks(
+                pages=extraction_result["pages"],
+                document_id=document_id,
+                original_filename=original_filename
+            )
+
+            extraction_result["chunks"] = chunks
+            extraction_result["chunks_count"] = len(chunks)
+
+            
 
             # 4. Prepare image paths relative to project root.
             for image in extraction_result["images"]:
@@ -99,7 +110,8 @@ class DocumentService:
                     extraction_result["text_blocks_count"]
                 ),
                 "images_count": extraction_result["images_count"],
-                "status": "processed"
+                "status": "processed",
+                "chunks_count": len(chunks),
             }
 
         except Exception:

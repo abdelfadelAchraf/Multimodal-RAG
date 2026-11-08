@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     UPLOAD_DIRECTORY: str = "data/uploads"
     EXTRACTED_DIRECTORY: str = "data/extracted"
 
+    CHUNK_SIZE: int = 500
+    CHUNK_OVERLAP: int = 100 # character shared between two consecutive chunks , that is to preserve the meaning/context between chunks
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
