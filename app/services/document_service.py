@@ -76,21 +76,26 @@ class DocumentService:
                 original_filename=original_filename
             )
 
-            # STEP 3: Generate text embeddings.
-            text_embeddings = [
-                clip_service.embed_text(chunk["text"])
-                for chunk in chunks
-            ]
+           # STEP 3: Generate text embeddings in batches.
+            texts = [chunk["text"] for chunk in chunks]
 
-            # STEP 4: Generate image embeddings.
+            text_embeddings = clip_service.embed_texts(
+                 texts=texts,
+                 batch_size=16
+            )
+
+# STEP 4: Generate image embeddings in batches.
             images = extraction_result["images"]
 
-            image_embeddings = [
-                clip_service.embed_image(
-                    self.project_root / image["image_path"]
-                )
-                for image in images
+            image_paths = [
+              self.project_root / image["image_path"]
+              for image in images
             ]
+
+            image_embeddings = clip_service.embed_images(
+                 image_paths=image_paths,
+                 batch_size=8
+            )
 
             # STEP 5: Store text vectors.
             chroma_repository.upsert_text_chunks(
