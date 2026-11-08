@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     # AI configuration
     GOOGLE_API_KEY: str = ""
 
+    MAX_UPLOAD_SIZE_MB: int = 20
+
     # Storage configuration
     CHROMA_PERSIST_DIRECTORY: str = "data/chroma_db"
     UPLOAD_DIRECTORY: str = "data/uploads"
