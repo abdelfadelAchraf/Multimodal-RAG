@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 
 from app.core.config import settings
-from app.api.routes import health
+from app.api.routes import health , documents
 
 #  Create our FastAPI app instance 
 app = FastAPI(
@@ -16,6 +16,10 @@ app = FastAPI(
 # Register API routers
 app.include_router(
     health.router,
+    prefix=settings.API_V1_PREFIX
+)
+app.include_router(
+    documents.router,
     prefix=settings.API_V1_PREFIX
 )
 
