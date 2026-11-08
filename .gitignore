@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.pytest_cache/
+
+# Environment variables
+.env
+
+# Uploaded data
+data/uploads/*
+data/extracted/*
+data/chroma_db/*
+
+# Keep directory placeholders
+!data/uploads/.gitkeep
+!data/extracted/.gitkeep
+!data/chroma_db/.gitkeep
+
+# IDE
+.idea/
+.vscode/

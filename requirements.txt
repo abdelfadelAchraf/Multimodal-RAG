@@ -1,0 +1,16 @@
+
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic-settings
+
+langchain-core
+langchain-text-splitters
+
+pymupdf
+chromadb
+
+torch
+transformers
+pillow
+numpy
