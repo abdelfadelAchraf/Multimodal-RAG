@@ -3,16 +3,16 @@ from functools import lru_cache
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from transformers import CLIPTokenizerFast
-from app.core.config import settings
 
 
 
 
+MODEL_NAME = "openai/clip-vit-base-patch32"
 
 @lru_cache(maxsize=1)
 def get_clip_tokenizer():
     """Load and cache the tokenizer."""
-    return CLIPTokenizerFast.from_pretrained(settings.MODEL_NAME)
+    return CLIPTokenizerFast.from_pretrained(MODEL_NAME)
 
 
 def create_text_chunks(

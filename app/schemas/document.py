@@ -12,5 +12,6 @@ class DocumentUploadResponse(BaseModel):
     page_count: int
     text_blocks_count: int
     images_count: int
+    chunks_count: int
 
     message: str
