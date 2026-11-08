@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     GOOGLE_API_KEY: str = ""
 
     MAX_UPLOAD_SIZE_MB: int = 20
+    #CLIP
+    MODEL_NAME = "openai/clip-vit-base-patch32"
 
     # Storage configuration
     CHROMA_PERSIST_DIRECTORY: str = "data/chroma_db"

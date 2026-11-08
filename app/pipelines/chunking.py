@@ -1,5 +1,18 @@
 
+from functools import lru_cache
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from transformers import CLIPTokenizerFast
+from app.core.config import settings
+
+
+
+
+
+@lru_cache(maxsize=1)
+def get_clip_tokenizer():
+    """Load and cache the tokenizer."""
+    return CLIPTokenizerFast.from_pretrained(settings.MODEL_NAME)
 
 
 def create_text_chunks(
@@ -7,17 +20,22 @@ def create_text_chunks(
     document_id: str,
     original_filename: str
 ) -> list[dict]:
-    """
-    Split extracted PDF pages into smaller text chunks.
 
-    Each chunk retains its source document and page number.
-    """
+    tokenizer = get_clip_tokenizer()
 
-    text_splitter = RecursiveCharacterTextSplitter( 
-        chunk_size=500,
-        chunk_overlap=100,
-        separators=["\n\n", "\n", ". ", " ", ""],
-        length_function=len
+    def count_tokens(text: str) -> int:
+        return len(
+            tokenizer.encode(
+                text,
+                add_special_tokens=False
+            )
+        )
+
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=65,
+        chunk_overlap=10,
+        length_function=count_tokens,
+        separators=["\n\n", "\n", ". ", " ", ""]
     )
 
     chunks = []
