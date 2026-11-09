@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 
 from app.core.config import settings
-from app.api.routes import health , documents , search
+from app.api.routes import health , documents , search, chat
 
 #  Create our FastAPI app instance 
 app = FastAPI(
@@ -24,6 +24,10 @@ app.include_router(
 )
 app.include_router(
     search.router,
+    prefix=settings.API_V1_PREFIX
+)
+app.include_router(
+    chat.router,
     prefix=settings.API_V1_PREFIX
 )
 
